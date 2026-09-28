@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login · Digital Library</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="brand"><span class="brand-icon">📚</span> Digital Library</div>
+    <h1>Welcome back</h1>
+    <p class="sub">Log in to browse and borrow books</p>
+
+    <div id="error" class="alert alert-danger hidden"></div>
+
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" required>
+      </div>
+      <button id="submit" class="btn btn-block" type="submit">Log in</button>
+    </form>
+
+    <p class="auth-switch">New member? <a href="/register.html">Create an account</a></p>
+
+    <div class="demo-box">
+      <strong>Demo accounts</strong><br>
+      Admin: <code>admin@library.com</code> / <code>Admin@123</code><br>
+      Member: <code>mohammad@library.com</code> / <code>User@1234</code><br>
+      Member: <code>sara@library.com</code> / <code>User@1234</code>
+    </div>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>

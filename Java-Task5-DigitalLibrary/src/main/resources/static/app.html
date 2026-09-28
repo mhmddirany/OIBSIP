@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Library · Digital Library</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="hidden">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-icon">📚</span> Digital Library</div>
+    <div class="user-box">
+      <span class="user-name" id="user-name"></span>
+      <span class="role-tag" id="user-role"></span>
+      <button class="btn btn-secondary btn-sm" id="logout-btn">Log out</button>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" data-tab="catalogue">Catalogue</button>
+    <button class="tab" data-tab="loans">My Books</button>
+    <button class="tab" data-tab="reservations">Reservations</button>
+    <button class="tab" data-tab="contact">Contact</button>
+  </nav>
+</header>
+
+<main>
+  <div id="summary-alert"></div>
+
+  <!-- Catalogue -->
+  <section class="panel active" id="panel-catalogue">
+    <div class="panel-head">
+      <div>
+        <h2>Book catalogue</h2>
+        <p class="muted small" id="rules"></p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search by title, author or ISBN…">
+      <select id="category"><option value="">All categories</option></select>
+    </div>
+    <div class="book-grid" id="book-grid"></div>
+  </section>
+
+  <!-- My books -->
+  <section class="panel" id="panel-loans">
+    <div class="panel-head"><h2>My books</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr>
+          <th>Book</th><th>Issued</th><th>Due</th><th>Returned</th><th>Status</th><th class="num">Fine</th><th></th>
+        </tr>
+        </thead>
+        <tbody id="loans-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Reservations -->
+  <section class="panel" id="panel-reservations">
+    <div class="panel-head">
+      <div>
+        <h2>My reservations</h2>
+        <p class="muted small">When a reserved book is returned, it is issued to the first member in the queue automatically.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr><th>Book</th><th>Reserved on</th><th>Status</th><th>Queue</th><th></th></tr>
+        </thead>
+        <tbody id="reservations-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="panel" id="panel-contact">
+    <div class="card" style="max-width: 640px;">
+      <h2>Contact the library</h2>
+      <p class="muted">Questions about a book, your fines or a loan extension? Send us a message.</p>
+      <form id="contact-form" novalidate>
+        <div class="field">
+          <label for="subject">Subject</label>
+          <input id="subject" type="text" maxlength="150" required>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" maxlength="2000" required></textarea>
+        </div>
+        <button class="btn" id="contact-submit" type="submit">Send message</button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<script src="/js/common.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>

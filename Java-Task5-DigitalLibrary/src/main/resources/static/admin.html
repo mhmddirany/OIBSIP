@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin · Digital Library</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="hidden">
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="brand-icon">📚</span> Digital Library · Admin</div>
+    <div class="user-box">
+      <span class="user-name" id="user-name"></span>
+      <span class="role-tag" id="user-role"></span>
+      <button class="btn btn-secondary btn-sm" id="logout-btn">Log out</button>
+    </div>
+  </div>
+  <nav class="tabs">
+    <button class="tab active" data-tab="dashboard">Dashboard</button>
+    <button class="tab" data-tab="books">Books</button>
+    <button class="tab" data-tab="loans">Issued Books</button>
+    <button class="tab" data-tab="members">Members</button>
+    <button class="tab" data-tab="fines">Fines</button>
+    <button class="tab" data-tab="reservations">Reservations</button>
+    <button class="tab" data-tab="messages">Messages <span class="count hidden" id="msg-count"></span></button>
+  </nav>
+</header>
+
+<main>
+  <!-- Dashboard -->
+  <section class="panel active" id="panel-dashboard">
+    <div class="panel-head"><h2>Overview</h2></div>
+    <div class="stats-grid" id="stats"></div>
+  </section>
+
+  <!-- Books -->
+  <section class="panel" id="panel-books">
+    <div class="panel-head">
+      <h2>Manage books</h2>
+      <button class="btn" id="add-book-btn">+ Add book</button>
+    </div>
+    <div class="toolbar">
+      <input id="book-search" type="search" placeholder="Search by title, author or ISBN…">
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr><th>Title</th><th>Author</th><th>ISBN</th><th>Category</th><th class="num">Available</th><th class="num">Queue</th><th></th></tr>
+        </thead>
+        <tbody id="books-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Issued books -->
+  <section class="panel" id="panel-loans">
+    <div class="panel-head">
+      <h2>Issued books</h2>
+      <select id="loan-filter" style="max-width: 200px;">
+        <option value="active">Currently issued</option>
+        <option value="overdue">Overdue only</option>
+        <option value="all">All history</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr><th>Book</th><th>Member</th><th>Issued</th><th>Due</th><th>Returned</th><th>Status</th><th class="num">Fine</th><th></th></tr>
+        </thead>
+        <tbody id="loans-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Members -->
+  <section class="panel" id="panel-members">
+    <div class="panel-head"><h2>Members</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th class="num">Books out</th><th class="num">Unpaid fines</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="members-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Fines -->
+  <section class="panel" id="panel-fines">
+    <div class="panel-head">
+      <div>
+        <h2>Fines</h2>
+        <p class="muted small">Fines are calculated automatically when an overdue book is returned. Running fines on books still out are shown under Issued Books.</p>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr><th>Member</th><th>Book</th><th>Due</th><th>Returned</th><th class="num">Days late</th><th class="num">Fine</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody id="fines-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Reservations -->
+  <section class="panel" id="panel-reservations">
+    <div class="panel-head"><h2>Reservations</h2></div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+        <tr><th>Book</th><th>Member</th><th>Reserved on</th><th>Status</th><th>Queue</th></tr>
+        </thead>
+        <tbody id="reservations-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Messages -->
+  <section class="panel" id="panel-messages">
+    <div class="panel-head"><h2>Member messages</h2></div>
+    <div class="msg-list" id="messages-list"></div>
+  </section>
+</main>
+
+<!-- Add / edit book dialog -->
+<dialog id="book-dialog">
+  <form id="book-form" class="dialog-body" novalidate>
+    <h2 id="book-dialog-title">Add book</h2>
+    <div id="book-error" class="alert alert-danger hidden"></div>
+    <input type="hidden" id="book-id">
+    <div class="field">
+      <label for="book-title">Title</label>
+      <input id="book-title" maxlength="200" required>
+    </div>
+    <div class="field">
+      <label for="book-author">Author</label>
+      <input id="book-author" maxlength="120" required>
+    </div>
+    <div class="form-row">
+      <div class="field">
+        <label for="book-isbn">ISBN</label>
+        <input id="book-isbn" maxlength="17" placeholder="978-0-13-235088-4" required>
+      </div>
+      <div class="field">
+        <label for="book-category">Category</label>
+        <input id="book-category" list="category-options" maxlength="60" required>
+        <datalist id="category-options"></datalist>
+      </div>
+    </div>
+    <div class="field">
+      <label for="book-quantity">Number of copies</label>
+      <input id="book-quantity" type="number" min="1" max="1000" value="1" required>
+    </div>
+    <div class="dialog-actions">
+      <button type="button" class="btn btn-secondary" id="book-cancel">Cancel</button>
+      <button type="submit" class="btn" id="book-save">Save</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/js/common.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>

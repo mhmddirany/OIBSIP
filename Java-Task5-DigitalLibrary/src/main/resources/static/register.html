@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register · Digital Library</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="brand"><span class="brand-icon">📚</span> Digital Library</div>
+    <h1>Create your account</h1>
+    <p class="sub">Join the library to borrow and reserve books</p>
+
+    <div id="error" class="alert alert-danger hidden"></div>
+
+    <form id="register-form" novalidate>
+      <div class="field">
+        <label for="fullName">Full name</label>
+        <input id="fullName" type="text" autocomplete="name" maxlength="100" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" autocomplete="email" maxlength="120" required>
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="new-password" required>
+        <div class="small muted">At least 8 characters, including a number.</div>
+      </div>
+      <div class="field">
+        <label for="confirm">Confirm password</label>
+        <input id="confirm" type="password" autocomplete="new-password" required>
+      </div>
+      <button id="submit" class="btn btn-block" type="submit">Register</button>
+    </form>
+
+    <p class="auth-switch">Already a member? <a href="/index.html">Log in</a></p>
+  </div>
+</div>
+
+<script src="/js/common.js"></script>
+<script src="/js/auth.js"></script>
+</body>
+</html>
